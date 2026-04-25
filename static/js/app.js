@@ -6,9 +6,9 @@ let currentLanguage = "English", userLat = 19.076, userLon = 72.8777, dashboardM
 
 // ─── i18n ─────────────────────────────────────────────────────────
 const i18n = {
-    English: { nav_dashboard:"Dashboard", nav_smart:"Smart Estimator", nav_season:"Season Planner", nav_doctor:"Crop Doctor", nav_market:"Market Analysis", nav_roi:"ROI Calculator", dash_title:"Dashboard", dash_desc:"Real-time weather, 5-day forecast, and AI-powered daily advisory.", weather_title:"Current Weather", forecast_title:"5-Day Forecast", location_title:"Farm Location", advisory_title:"Today's Advisory", smart_title:"🧑‍🌾 Smart Soil Estimator", smart_desc:"No lab test? Just answer simple questions and let AI estimate your soil & recommend crops!", season_title:"🗓️ Season Planner", season_desc:"AI predicts next season's weather and recommends what to plant. Plus a full 12-month calendar.", doctor_title:"📸 Crop Doctor", doctor_desc:"Upload a photo and AI diagnoses diseases instantly.", market_title:"Market Analysis", market_desc:"AI-powered market prices, trends, and selling times.", roi_title:"ROI Calculator", roi_desc:"Estimate return on investment with AI cost breakdown.", upload_prompt:"Click or drag a photo here" },
-    Hindi: { nav_dashboard:"डैशबोर्ड", nav_smart:"स्मार्ट अनुमान", nav_season:"मौसम योजना", nav_doctor:"फसल डॉक्टर", nav_market:"बाज़ार विश्लेषण", nav_roi:"ROI कैलकुलेटर", dash_title:"डैशबोर्ड", dash_desc:"मौसम, पूर्वानुमान और AI सलाह।", weather_title:"मौजूदा मौसम", forecast_title:"5-दिन का पूर्वानुमान", location_title:"खेत का स्थान", advisory_title:"आज की सलाह", smart_title:"🧑‍🌾 स्मार्ट मिट्टी अनुमान", smart_desc:"मिट्टी का pH नहीं पता? सरल सवालों का जवाब दें!", season_title:"🗓️ मौसम योजना", season_desc:"AI अगले मौसम की भविष्यवाणी करता है।", doctor_title:"📸 फसल डॉक्टर", doctor_desc:"फोटो अपलोड करें, AI बीमारी बताएगा।", market_title:"बाज़ार विश्लेषण", market_desc:"AI बाज़ार भाव और रुझान।", roi_title:"ROI कैलकुलेटर", roi_desc:"AI लागत विश्लेषण।", upload_prompt:"फोटो यहाँ डालें" },
-    Marathi: { nav_dashboard:"डॅशबोर्ड", nav_smart:"स्मार्ट अंदाज", nav_season:"हंगाम नियोजन", nav_doctor:"पीक डॉक्टर", nav_market:"बाजार विश्लेषण", nav_roi:"ROI कॅल्क्युलेटर", dash_title:"डॅशबोर्ड", dash_desc:"हवामान, अंदाज आणि AI सल्ला.", weather_title:"सध्याचे हवामान", forecast_title:"5-दिवसांचा अंदाज", location_title:"शेताचे ठिकाण", advisory_title:"आजचा सल्ला", smart_title:"🧑‍🌾 स्मार्ट माती अंदाज", smart_desc:"pH माहित नाही? सोप्या प्रश्नांची उत्तरे द्या!", season_title:"🗓️ हंगाम नियोजन", season_desc:"AI पुढील हंगामाचा अंदाज वर्तवतो.", doctor_title:"📸 पीक डॉक्टर", doctor_desc:"फोटो अपलोड करा, AI रोग ओळखेल.", market_title:"बाजार विश्लेषण", market_desc:"AI बाजारभाव आणि ट्रेंड.", roi_title:"ROI कॅल्क्युलेटर", roi_desc:"AI खर्च विश्लेषण.", upload_prompt:"फोटो इथे टाका" }
+    English: { nav_dashboard:"Dashboard", nav_smart:"Smart Estimator", nav_season:"Season Planner", nav_doctor:"Crop Doctor", nav_market:"Market Analysis", nav_roi:"ROI Calculator", dash_title:"Dashboard", dash_desc:"Real-time weather, 5-day forecast, and AI-powered daily advisory.", weather_title:"Current Weather", forecast_title:"5-Day Forecast", location_title:"Farm Location", advisory_title:"Today's Advisory", smart_title:"🧑‍🌾 Smart Soil Estimator", smart_desc:"No lab test? Just answer simple questions and let AI estimate your soil & recommend crops for the next 90 days!", season_title:"🗓️ Season Planner", season_desc:"AI analyzes 90-day climate data (16-day forecast + historical patterns) to recommend what to plant.", doctor_title:"📸 Crop Doctor", doctor_desc:"Upload a photo and AI diagnoses diseases instantly.", market_title:"Market Analysis", market_desc:"AI-powered market prices, trends, and selling times.", roi_title:"ROI Calculator", roi_desc:"Estimate return on investment with AI cost breakdown.", upload_prompt:"Click or drag a photo here" },
+    Hindi: { nav_dashboard:"डैशबोर्ड", nav_smart:"स्मार्ट अनुमान", nav_season:"मौसम योजना", nav_doctor:"फसल डॉक्टर", nav_market:"बाज़ार विश्लेषण", nav_roi:"ROI कैलकुलेटर", dash_title:"डैशबोर्ड", dash_desc:"मौसम, पूर्वानुमान और AI सलाह।", weather_title:"मौजूदा मौसम", forecast_title:"5-दिन का पूर्वानुमान", location_title:"खेत का स्थान", advisory_title:"आज की सलाह", smart_title:"🧑‍🌾 स्मार्ट मिट्टी अनुमान", smart_desc:"मिट्टी का pH नहीं पता? सरल सवालों का जवाब दें, 90 दिन की फसल योजना पाएं!", season_title:"🗓️ मौसम योजना", season_desc:"AI 90 दिनों के जलवायु आँकड़ों का विश्लेषण करता है।", doctor_title:"📸 फसल डॉक्टर", doctor_desc:"फोटो अपलोड करें, AI बीमारी बताएगा।", market_title:"बाज़ार विश्लेषण", market_desc:"AI बाज़ार भाव और रुझान।", roi_title:"ROI कैलकुलेटर", roi_desc:"AI लागत विश्लेषण।", upload_prompt:"फोटो यहाँ डालें" },
+    Marathi: { nav_dashboard:"डॅशबोर्ड", nav_smart:"स्मार्ट अंदाज", nav_season:"हंगाम नियोजन", nav_doctor:"पीक डॉक्टर", nav_market:"बाजार विश्लेषण", nav_roi:"ROI कॅल्क्युलेटर", dash_title:"डॅशबोर्ड", dash_desc:"हवामान, अंदाज आणि AI सल्ला.", weather_title:"सध्याचे हवामान", forecast_title:"5-दिवसांचा अंदाज", location_title:"शेताचे ठिकाण", advisory_title:"आजचा सल्ला", smart_title:"🧑‍🌾 स्मार्ट माती अंदाज", smart_desc:"pH माहित नाही? सोप्या प्रश्नांची उत्तरे द्या, 90 दिवसांची पीक योजना मिळवा!", season_title:"🗓️ हंगाम नियोजन", season_desc:"AI 90 दिवसांच्या हवामान डेटाचे विश्लेषण करतो.", doctor_title:"📸 पीक डॉक्टर", doctor_desc:"फोटो अपलोड करा, AI रोग ओळखेल.", market_title:"बाजार विश्लेषण", market_desc:"AI बाजारभाव आणि ट्रेंड.", roi_title:"ROI कॅल्क्युलेटर", roi_desc:"AI खर्च विश्लेषण.", upload_prompt:"फोटो इथे टाका" }
 };
 function updateLanguageUI() { const t = i18n[currentLanguage]||i18n.English; document.querySelectorAll('[data-i18n]').forEach(el => { const k = el.getAttribute('data-i18n'); if (t[k]) el.textContent = t[k]; }); }
 document.getElementById('lang-select').addEventListener('change', e => { currentLanguage = e.target.value; updateLanguageUI(); });
@@ -98,14 +98,50 @@ document.getElementById('smart_btn').addEventListener('click', async () => {
 // ─── 3. Season Planner ───────────────────────────────────────────
 document.getElementById('predict_btn').addEventListener('click', async () => {
     const btn=document.getElementById('predict_btn'), txt=document.getElementById('predict_btn_text');
-    txt.innerHTML='<div class="spinner"></div> Predicting...'; btn.disabled=true;
+    txt.innerHTML='<div class="spinner"></div> Analyzing 90-day data...'; btn.disabled=true;
     try {
         const data = await apiCall('/api/season-predict','POST',{ lat:userLat, lon:userLon, language:currentLanguage });
-        document.getElementById('predict-content').innerText = data.prediction;
+        // Build a data-source banner
+        const days = data.forecast_days || 90;
+        const extDays = (data.extended_forecast||[]).length;
+        const histWeeks = (data.historical_weeks||[]).length;
+        let bannerHTML = `<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;">`;
+        bannerHTML += `<div style="padding:8px 16px;background:linear-gradient(135deg,#2d5a27,#3b6934);color:#fff;border-radius:20px;font-size:13px;font-weight:600;">📊 ${days}+ Days of Climate Data</div>`;
+        if (extDays) bannerHTML += `<div style="padding:8px 16px;background:#e8f5e9;color:#2d5a27;border-radius:20px;font-size:13px;font-weight:600;">🌤️ ${extDays}-Day Detailed Forecast</div>`;
+        if (histWeeks) bannerHTML += `<div style="padding:8px 16px;background:#fff3e0;color:#e65100;border-radius:20px;font-size:13px;font-weight:600;">📅 ${histWeeks} Weeks Historical Data</div>`;
+        bannerHTML += `</div>`;
+        // Build mini forecast chart if extended data available
+        let chartHTML = '';
+        if (data.extended_forecast && data.extended_forecast.length > 0) {
+            chartHTML = `<div style="margin-bottom:20px;padding:16px;background:#f8faf8;border-radius:12px;border:1px solid #c2c9bb;">`;
+            chartHTML += `<h4 style="font-size:14px;font-weight:700;color:#154212;margin-bottom:12px;">🌡️ 16-Day Temperature & Rainfall Forecast</h4>`;
+            chartHTML += `<div style="display:flex;gap:6px;align-items:flex-end;height:100px;margin-bottom:8px;">`;
+            const maxT = Math.max(...data.extended_forecast.map(d=>d.temp_max));
+            const minT = Math.min(...data.extended_forecast.map(d=>d.temp_min));
+            const range = maxT - minT || 1;
+            data.extended_forecast.forEach(d => {
+                const hMax = ((d.temp_max - minT) / range) * 80 + 15;
+                const hMin = ((d.temp_min - minT) / range) * 80 + 15;
+                const hasRain = d.precipitation_mm > 0;
+                const dayLabel = d.date.slice(5);
+                chartHTML += `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;">`;
+                chartHTML += `<div style="font-size:9px;color:#666;">${Math.round(d.temp_max)}°</div>`;
+                chartHTML += `<div style="width:100%;display:flex;flex-direction:column;align-items:center;">`;
+                chartHTML += `<div style="width:12px;height:${hMax}px;background:linear-gradient(180deg,#ff7043,#ffab91);border-radius:4px 4px 0 0;"></div>`;
+                if (hasRain) chartHTML += `<div style="width:12px;height:${Math.min(d.precipitation_mm*2,25)}px;background:#42a5f5;border-radius:0 0 4px 4px;" title="${d.precipitation_mm}mm rain"></div>`;
+                chartHTML += `</div>`;
+                chartHTML += `<div style="font-size:8px;color:#999;writing-mode:vertical-lr;height:35px;overflow:hidden;">${dayLabel}</div>`;
+                chartHTML += `</div>`;
+            });
+            chartHTML += `</div>`;
+            chartHTML += `<div style="display:flex;gap:16px;font-size:11px;color:#666;"><span>🔴 Temperature</span><span>🔵 Rainfall</span></div>`;
+            chartHTML += `</div>`;
+        }
+        document.getElementById('predict-content').innerHTML = bannerHTML + chartHTML + `<pre style="white-space:pre-wrap;font-family:inherit;margin:0;line-height:1.8;">${data.prediction}</pre>`;
         document.getElementById('predict-result').style.display='block';
         document.getElementById('predict-result').scrollIntoView({behavior:'smooth'});
     } catch(err) { alert("Error: "+err.message); }
-    finally { txt.innerText='🔮 Predict Next Season Crops'; btn.disabled=false; }
+    finally { txt.innerText='🔮 90-Day Season Prediction'; btn.disabled=false; }
 });
 
 document.getElementById('calendar_btn').addEventListener('click', async () => {
