@@ -57,6 +57,15 @@ class ROIQuery(BaseModel):
     region: str = "India"
     language: str = "English"
 
+class CropCompareInput(BaseModel):
+    crops: list[str]
+    area_acres: float = 5.0
+    investment_inr: float = 50000.0
+    region: str = "India"
+    lat: float = 19.076
+    lon: float = 72.8777
+    language: str = "English"
+
 # ─── Helper: Language instruction ──────────────────────────────────
 
 def lang_instruction(lang: str) -> str:
@@ -442,6 +451,86 @@ Provide: 1) Cost Breakdown 2) Expected Yield 3) Revenue 4) Net Profit 5) ROI% 6)
 Respond in plain text."""
     roi = await ask_groq("You are a financial advisor for Indian agriculture.", prompt, query.language)
     return {"roi_analysis": roi, "crop": query.crop, "area_acres": query.area_acres, "investment_inr": query.investment_inr}
+
+# ── 6b. Crop Comparison ───────────────────────────────────────────
+
+@app.post("/api/crop-compare")
+async def crop_compare(data: CropCompareInput):
+    if len(data.crops) < 2:
+        raise HTTPException(status_code=400, detail="Please provide at least 2 crops to compare.")
+    if len(data.crops) > 6:
+        raise HTTPException(status_code=400, detail="Maximum 6 crops can be compared at once.")
+
+    weather = await fetch_weather(data.lat, data.lon)
+    extended = await fetch_extended_forecast(data.lat, data.lon)
+    historical = await fetch_historical_90day(data.lat, data.lon)
+    climate_summary = build_90day_climate_summary(extended, historical)
+
+    crops_str = ", ".join(data.crops)
+    prompt = f"""You are an expert agricultural financial analyst and agronomist. Compare these crops side-by-side for a farmer.
+
+Crops to compare: {crops_str}
+Farm Area: {data.area_acres} acres
+Budget/Investment: ₹{data.investment_inr}
+Region: {data.region}
+Current Weather: {weather['temp']}°C, Humidity: {weather['humidity']}%, {weather['description']}
+Location: Lat {data.lat}, Lon {data.lon}
+
+--- 90-DAY CLIMATE DATA ---
+{climate_summary}
+
+Return ONLY valid JSON in this EXACT format (no markdown, no explanation):
+{{
+    "crops": [
+        {{
+            "name": "Crop Name",
+            "profit_score": 85,
+            "risk_score": 30,
+            "water_score": 70,
+            "labor_score": 60,
+            "sustainability_score": 80,
+            "investment_inr": 25000,
+            "expected_revenue_inr": 75000,
+            "net_profit_inr": 50000,
+            "roi_percent": 200,
+            "water_requirement": "Medium",
+            "growth_days": 120,
+            "best_for": "Max Profit",
+            "risk_factors": "Price volatility, pest susceptibility",
+            "key_advantage": "High market demand and good yield",
+            "season_fit": "How well it fits the 90-day forecast"
+        }}
+    ],
+    "best_overall": "Crop Name",
+    "best_profit": "Crop Name",
+    "best_low_risk": "Crop Name",
+    "best_water_saving": "Crop Name",
+    "best_sustainability": "Crop Name",
+    "summary": "2-3 sentence overall comparison summary"
+}}
+
+SCORING RULES (all scores 0-100):
+- profit_score: Higher = more profitable (consider yield, market price, ROI)
+- risk_score: LOWER = LESS risky (invert: 0=safest, 100=riskiest)
+- water_score: Higher = more water efficient (less water needed)
+- labor_score: Higher = less labor intensive
+- sustainability_score: Higher = more eco-friendly, better soil health
+
+Calculate realistic INR figures for {data.region} market.
+{lang_instruction(data.language)}
+Return ONLY valid JSON."""
+
+    raw = await ask_groq("You are an agricultural economics expert. Respond ONLY with valid JSON.", prompt, data.language)
+    try:
+        cleaned = raw.strip()
+        if cleaned.startswith("```"): cleaned = cleaned.split("\n", 1)[1]
+        if cleaned.endswith("```"): cleaned = cleaned.rsplit("```", 1)[0]
+        comparison = json.loads(cleaned.strip())
+    except Exception:
+        # Fallback: return raw text if JSON parsing fails
+        return {"comparison": None, "raw_analysis": raw, "crops": data.crops}
+
+    return {"comparison": comparison, "crops": data.crops, "weather": weather}
 
 # ── 7. Season Predictor ───────────────────────────────────────────
 

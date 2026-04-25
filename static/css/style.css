@@ -119,6 +119,14 @@ body { font-family: 'Manrope', sans-serif; background: var(--surface); color: va
 .upload-zone { border: 2px dashed var(--outline-variant); border-radius: 16px; padding: 48px; text-align: center; cursor: pointer; transition: all 0.3s; background: var(--surface-container-low); }
 .upload-zone:hover, .upload-zone.dragover { border-color: var(--primary); background: rgba(21,66,18,0.04); transform: scale(1.01); }
 
+/* ─── Crop Comparison ──────────────────────────────────────────── */
+.compare-pill { padding: 8px 16px; border-radius: 999px; border: 2px solid var(--outline-variant); color: var(--on-surface-variant); font-size: 13px; font-weight: 500; cursor: pointer; font-family: 'Manrope', sans-serif; background: transparent; transition: all 0.25s; }
+.compare-pill:hover { border-color: var(--primary); transform: scale(1.05); background: rgba(21,66,18,0.04); }
+.compare-pill.active { border-color: var(--primary); background: var(--primary-container); color: #fff; font-weight: 700; transform: scale(1.05); box-shadow: 0 2px 8px rgba(21,66,18,0.2); }
+.compare-tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: linear-gradient(135deg, #e8f5e9, #c8e6c9); color: var(--primary); border-radius: 999px; font-size: 13px; font-weight: 600; animation: fadeIn 0.3s both; }
+.compare-tag-x { cursor: pointer; font-size: 14px; color: #999; transition: color 0.2s; font-weight: 400; }
+.compare-tag-x:hover { color: var(--error); }
+
 /* ─── Responsive ────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .sidebar { display: none; }

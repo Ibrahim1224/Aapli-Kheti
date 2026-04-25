@@ -229,3 +229,158 @@ document.getElementById('roi_btn').addEventListener('click', async () => {
     } catch(err){alert("Error: "+err.message);}
     finally{txt.innerText='Calculate ROI';btn.disabled=false;}
 });
+
+// ─── 7. Crop Comparison ──────────────────────────────────────────
+let selectedCompCrops = [];
+function renderSelectedCrops() {
+    const container = document.getElementById('compare-selected');
+    if (selectedCompCrops.length === 0) {
+        container.innerHTML = '<span style="color:#999;font-size:13px;padding:8px;">No crops selected yet — click crops above or add custom ones</span>';
+        return;
+    }
+    container.innerHTML = selectedCompCrops.map(c =>
+        `<span class="compare-tag">${c} <span class="compare-tag-x" data-remove="${c}">✕</span></span>`
+    ).join('');
+    container.querySelectorAll('.compare-tag-x').forEach(x => {
+        x.addEventListener('click', () => {
+            const crop = x.getAttribute('data-remove');
+            selectedCompCrops = selectedCompCrops.filter(c => c !== crop);
+            document.querySelectorAll('.compare-pill').forEach(p => { if(p.getAttribute('data-crop')===crop) p.classList.remove('active'); });
+            renderSelectedCrops();
+        });
+    });
+}
+renderSelectedCrops();
+
+// Pill selection (toggle on/off)
+document.querySelectorAll('.compare-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+        const crop = pill.getAttribute('data-crop');
+        if (selectedCompCrops.includes(crop)) {
+            selectedCompCrops = selectedCompCrops.filter(c => c !== crop);
+            pill.classList.remove('active');
+        } else {
+            if (selectedCompCrops.length >= 6) { alert('Max 6 crops.'); return; }
+            selectedCompCrops.push(crop);
+            pill.classList.add('active');
+        }
+        renderSelectedCrops();
+    });
+});
+
+// Custom crop add
+document.getElementById('compare_add_btn').addEventListener('click', () => {
+    const input = document.getElementById('compare_custom');
+    const val = input.value.trim();
+    if (!val) return;
+    val.split(',').map(c => c.trim()).filter(c => c).forEach(crop => {
+        if (!selectedCompCrops.includes(crop) && selectedCompCrops.length < 6) {
+            selectedCompCrops.push(crop);
+        }
+    });
+    input.value = '';
+    renderSelectedCrops();
+});
+
+// Score bar helper
+function scoreBar(score, color, label) {
+    const w = Math.max(score, 5);
+    return `<div style="margin-bottom:6px;">
+        <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;color:#666;margin-bottom:2px;">
+            <span>${label}</span><span>${score}/100</span>
+        </div>
+        <div style="height:8px;background:#f0f0f0;border-radius:4px;overflow:hidden;">
+            <div style="height:100%;width:${w}%;background:${color};border-radius:4px;transition:width 0.8s ease;"></div>
+        </div>
+    </div>`;
+}
+
+// Compare button
+document.getElementById('compare_btn').addEventListener('click', async () => {
+    if (selectedCompCrops.length < 2) { alert('Select at least 2 crops to compare.'); return; }
+    const btn = document.getElementById('compare_btn'), txt = document.getElementById('compare_btn_text');
+    const area = parseFloat(document.getElementById('compare_area').value) || 5;
+    const budget = parseFloat(document.getElementById('compare_budget').value) || 50000;
+    const region = document.getElementById('compare_region').value.trim() || 'India';
+
+    txt.innerHTML = '<div class="spinner"></div> Comparing...'; btn.disabled = true;
+    try {
+        const data = await apiCall('/api/crop-compare', 'POST', {
+            crops: selectedCompCrops, area_acres: area, investment_inr: budget,
+            region: region, lat: userLat, lon: userLon, language: currentLanguage
+        });
+
+        if (!data.comparison) {
+            // Fallback: raw text
+            document.getElementById('compare-winners').innerHTML = '';
+            document.getElementById('compare-cards').innerHTML = `<div class="result-box">${data.raw_analysis||'Analysis unavailable.'}</div>`;
+            document.getElementById('compare-summary').innerHTML = '';
+        } else {
+            const c = data.comparison;
+            // Winner badges
+            let winnersHTML = `<div style="display:flex;gap:10px;flex-wrap:wrap;">`;
+            const badges = [
+                {icon:'🏆',label:'Best Overall',crop:c.best_overall,bg:'linear-gradient(135deg,#2d5a27,#4caf50)',color:'#fff'},
+                {icon:'💰',label:'Max Profit',crop:c.best_profit,bg:'linear-gradient(135deg,#e65100,#ff9800)',color:'#fff'},
+                {icon:'🛡️',label:'Lowest Risk',crop:c.best_low_risk,bg:'linear-gradient(135deg,#1565c0,#42a5f5)',color:'#fff'},
+                {icon:'💧',label:'Water Saver',crop:c.best_water_saving,bg:'linear-gradient(135deg,#00838f,#26c6da)',color:'#fff'},
+                {icon:'🌱',label:'Sustainable',crop:c.best_sustainability,bg:'linear-gradient(135deg,#2e7d32,#66bb6a)',color:'#fff'}
+            ];
+            badges.forEach(b => {
+                winnersHTML += `<div style="padding:10px 18px;background:${b.bg};color:${b.color};border-radius:14px;font-size:13px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,0.15);display:flex;align-items:center;gap:6px;animation:fadeIn 0.4s both;">
+                    <span style="font-size:18px;">${b.icon}</span>
+                    <span>${b.label}:</span>
+                    <span style="text-decoration:underline;">${b.crop}</span>
+                </div>`;
+            });
+            winnersHTML += `</div>`;
+            document.getElementById('compare-winners').innerHTML = winnersHTML;
+
+            // Crop cards
+            let cardsHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">`;
+            const crops = c.crops || [];
+            crops.forEach((crop, i) => {
+                const isBest = crop.name === c.best_overall;
+                cardsHTML += `<div class="card" style="position:relative;${isBest?'border:2px solid var(--primary);background:linear-gradient(135deg,rgba(21,66,18,0.02),rgba(21,66,18,0.06));':''}animation:fadeIn 0.4s ${i*0.1}s both;">
+                    ${isBest ? '<div style="position:absolute;top:-10px;right:16px;background:var(--primary);color:#fff;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;">🏆 BEST PICK</div>' : ''}
+                    <h4 style="font-size:18px;font-weight:800;color:var(--primary);margin-bottom:4px;">${crop.name}</h4>
+                    <div style="font-size:11px;color:var(--outline);margin-bottom:12px;">${crop.growth_days||'—'} days • ${crop.water_requirement||'—'} water • ${crop.best_for||'—'}</div>
+
+                    ${scoreBar(crop.profit_score, '#4caf50', '💰 Profit Potential')}
+                    ${scoreBar(100 - crop.risk_score, '#42a5f5', '🛡️ Safety (Low Risk)')}
+                    ${scoreBar(crop.water_score, '#26c6da', '💧 Water Efficiency')}
+                    ${scoreBar(crop.labor_score, '#ff9800', '⚙️ Low Labor')}
+                    ${scoreBar(crop.sustainability_score, '#66bb6a', '🌱 Sustainability')}
+
+                    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--outline-variant);">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;">
+                            <div><span style="color:#999;">Investment</span><br><strong style="color:var(--on-surface);">₹${(crop.investment_inr||0).toLocaleString('en-IN')}</strong></div>
+                            <div><span style="color:#999;">Revenue</span><br><strong style="color:#2e7d32;">₹${(crop.expected_revenue_inr||0).toLocaleString('en-IN')}</strong></div>
+                            <div><span style="color:#999;">Net Profit</span><br><strong style="color:${(crop.net_profit_inr||0)>=0?'#2e7d32':'#c62828'};">₹${(crop.net_profit_inr||0).toLocaleString('en-IN')}</strong></div>
+                            <div><span style="color:#999;">ROI</span><br><strong style="color:var(--primary);">${crop.roi_percent||0}%</strong></div>
+                        </div>
+                    </div>
+                    <div style="margin-top:12px;font-size:12px;color:var(--on-surface-variant);line-height:1.5;">
+                        <div style="margin-bottom:4px;"><strong style="color:var(--primary);">✅ Advantage:</strong> ${crop.key_advantage||'—'}</div>
+                        <div style="margin-bottom:4px;"><strong style="color:#e65100;">⚠️ Risks:</strong> ${crop.risk_factors||'—'}</div>
+                        <div><strong style="color:#1565c0;">📊 Season Fit:</strong> ${crop.season_fit||'—'}</div>
+                    </div>
+                </div>`;
+            });
+            cardsHTML += `</div>`;
+            document.getElementById('compare-cards').innerHTML = cardsHTML;
+
+            // Summary
+            if (c.summary) {
+                document.getElementById('compare-summary').innerHTML = `
+                    <div class="card card-green" style="display:flex;align-items:flex-start;gap:12px;">
+                        <span class="material-symbols-outlined" style="font-size:28px;margin-top:2px;">lightbulb</span>
+                        <div><strong style="font-size:14px;">AI Recommendation</strong><p style="margin-top:4px;font-size:14px;line-height:1.6;">${c.summary}</p></div>
+                    </div>`;
+            }
+        }
+        document.getElementById('compare-result').style.display = 'block';
+        document.getElementById('compare-result').scrollIntoView({ behavior: 'smooth' });
+    } catch (err) { alert('Error: ' + err.message); }
+    finally { txt.innerText = 'Compare Crops'; btn.disabled = false; }
+});
