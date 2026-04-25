@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Aapli Kheti | Crop Intelligence</title>
+    <link rel="stylesheet" href="/static/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+<div style="display:flex; height:100vh; overflow:hidden;">
+    <aside class="sidebar">
+        <div class="brand"><h1>🌾 Aapli Kheti</h1><p>Precision Farming</p></div>
+        <nav style="flex:1; display:flex; flex-direction:column; gap:4px;">
+            <button class="nav-link active" data-page="dashboard"><span class="material-symbols-outlined">dashboard</span><span data-i18n="nav_dashboard">Dashboard</span></button>
+            <button class="nav-link" data-page="smart"><span class="material-symbols-outlined">auto_awesome</span><span data-i18n="nav_smart">Smart Estimator</span></button>
+            <button class="nav-link" data-page="season"><span class="material-symbols-outlined">event</span><span data-i18n="nav_season">Season Planner</span></button>
+            <button class="nav-link" data-page="doctor"><span class="material-symbols-outlined">biotech</span><span data-i18n="nav_doctor">Crop Doctor</span></button>
+            <button class="nav-link" data-page="market"><span class="material-symbols-outlined">trending_up</span><span data-i18n="nav_market">Market Analysis</span></button>
+            <button class="nav-link" data-page="roi"><span class="material-symbols-outlined">insights</span><span data-i18n="nav_roi">ROI Calculator</span></button>
+        </nav>
+    </aside>
+
+    <main style="flex:1; display:flex; flex-direction:column; height:100vh; overflow-y:auto;">
+        <header class="top-header">
+            <h2 style="font-size:20px; font-weight:700; color:#1a3a18;">Aapli Kheti</h2>
+            <div style="display:flex; align-items:center; gap:16px;">
+                <select id="lang-select" class="lang-select"><option value="English">🌐 English</option><option value="Hindi">🇮🇳 हिंदी</option><option value="Marathi">🇮🇳 मराठी</option></select>
+                <span class="material-symbols-outlined" style="cursor:pointer; color:#999;">notifications</span>
+            </div>
+        </header>
+
+        <div style="padding:32px; max-width:1100px; margin:0 auto; width:100%;">
+
+            <!-- ═══ DASHBOARD ═══ -->
+            <section id="page-dashboard" class="page-section active">
+                <div class="page-header anim-slide-up"><h1 data-i18n="dash_title">Dashboard</h1><p data-i18n="dash_desc">Real-time weather, 5-day forecast, and AI-powered daily advisory.</p></div>
+                <div id="dashboard-loading" style="text-align:center; padding:60px;"><div class="spinner" style="width:40px;height:40px;border-width:4px;"></div><p style="margin-top:16px; color:#999;">Loading...</p></div>
+                <div id="dashboard-content" style="display:none;">
+                    <h3 class="section-heading anim-slide-up"><span class="material-symbols-outlined">cloud</span> <span data-i18n="weather_title">Current Weather</span></h3>
+                    <div class="weather-grid anim-stagger" id="weather-grid"></div>
+                    <h3 class="section-heading anim-slide-up" style="margin-top:32px;"><span class="material-symbols-outlined">calendar_month</span> <span data-i18n="forecast_title">5-Day Forecast</span></h3>
+                    <div id="forecast-cards" class="forecast-grid anim-stagger"></div>
+                    <h3 class="section-heading anim-slide-up" style="margin-top:32px;"><span class="material-symbols-outlined">location_on</span> <span data-i18n="location_title">Farm Location</span></h3>
+                    <div class="anim-scale" style="display:grid; grid-template-columns:2fr 1fr; gap:16px; margin-bottom:32px;">
+                        <div id="map" style="height:300px; border-radius:12px; border:1px solid var(--outline-variant); z-index:1;"></div>
+                        <div class="card" style="display:flex; flex-direction:column; justify-content:center;">
+                            <h4 style="font-size:16px; font-weight:700; color:var(--primary); margin-bottom:12px;">📍 Location</h4>
+                            <div id="location-details" style="font-size:14px; color:var(--on-surface-variant); line-height:2;">Loading...</div>
+                        </div>
+                    </div>
+                    <h3 class="section-heading anim-slide-up"><span class="material-symbols-outlined">tips_and_updates</span> <span data-i18n="advisory_title">Today's Advisory</span></h3>
+                    <div id="advisory-cards" class="anim-stagger" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;"></div>
+                </div>
+            </section>
+
+            <!-- ═══ SMART ESTIMATOR ═══ -->
+            <section id="page-smart" class="page-section">
+                <div class="page-header anim-slide-up"><h1 data-i18n="smart_title">🧑‍🌾 Smart Soil Estimator</h1><p data-i18n="smart_desc">No lab test? Just answer simple questions and let AI estimate your soil & recommend crops!</p></div>
+                <div class="card anim-scale">
+                    <h3 class="section-heading"><span class="material-symbols-outlined">palette</span> What does your soil look like?</h3>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
+                        <button class="soil-btn active" data-value="Dark Black Soil"><span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:#2c1810;vertical-align:middle;margin-right:6px;"></span>Dark Black</button>
+                        <button class="soil-btn" data-value="Reddish Brown Soil"><span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:#8B4513;vertical-align:middle;margin-right:6px;"></span>Reddish Brown</button>
+                        <button class="soil-btn" data-value="Light Sandy Soil"><span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:#C2B280;vertical-align:middle;margin-right:6px;"></span>Light Sandy</button>
+                        <button class="soil-btn" data-value="Grey Clay Soil"><span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:#808080;vertical-align:middle;margin-right:6px;"></span>Grey Clay</button>
+                    </div>
+                    <h3 class="section-heading"><span class="material-symbols-outlined">water</span> How does water drain?</h3>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
+                        <button class="drain-btn active" data-value="Water pools quickly after rain">💧 Pools Quickly</button>
+                        <button class="drain-btn" data-value="Water drains slowly over time">🌊 Drains Slowly</button>
+                        <button class="drain-btn" data-value="Water drains fast, soil dries quickly">☀️ Drains Fast</button>
+                    </div>
+                    <h3 class="section-heading"><span class="material-symbols-outlined">grass</span> What did you grow last season?</h3>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
+                        <button class="prev-btn active" data-value="Rice">🌾 Rice</button>
+                        <button class="prev-btn" data-value="Wheat">🌿 Wheat</button>
+                        <button class="prev-btn" data-value="Sugarcane">🎋 Sugarcane</button>
+                        <button class="prev-btn" data-value="Vegetables">🥬 Vegetables</button>
+                        <button class="prev-btn" data-value="Nothing / Fallow">🏜️ Nothing</button>
+                    </div>
+                    <h3 class="section-heading"><span class="material-symbols-outlined">science</span> What fertilizer do you use?</h3>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
+                        <button class="fert-btn active" data-value="DAP">DAP</button>
+                        <button class="fert-btn" data-value="Urea">Urea</button>
+                        <button class="fert-btn" data-value="Organic Compost">🌿 Compost</button>
+                        <button class="fert-btn" data-value="None">None</button>
+                    </div>
+                    <div class="grid-2" style="margin-bottom:16px;">
+                        <div><label class="field-label">Water Source</label><select id="smart_water" class="input-field"><option>Well Water</option><option>Rainfed</option><option>River/Stream</option></select></div>
+                        <div><label class="field-label">Farming Type</label><select id="smart_farm" class="input-field"><option>Mixed</option><option>Organic</option><option>Chemical</option></select></div>
+                    </div>
+                    <button id="smart_btn" class="btn-primary btn-glow" style="margin-top:8px;"><span id="smart_btn_text">🌱 Get Smart Recommendations</span></button>
+                </div>
+                <div id="smart-result" style="display:none; margin-top:24px;" class="fade-in"><h3 class="section-heading"><span class="material-symbols-outlined">auto_awesome</span> AI Analysis</h3><div class="result-box" id="smart-content"></div></div>
+            </section>
+
+            <!-- ═══ SEASON PLANNER ═══ -->
+            <section id="page-season" class="page-section">
+                <div class="page-header anim-slide-up"><h1 data-i18n="season_title">🗓️ Season Planner</h1><p data-i18n="season_desc">AI predicts next season's weather and recommends what to plant. Plus a full 12-month farming calendar.</p></div>
+                <div class="grid-2" style="margin-bottom:24px;">
+                    <button id="predict_btn" class="btn-primary btn-glow btn-large"><span id="predict_btn_text">🔮 Predict Next Season Crops</span></button>
+                    <button id="calendar_btn" class="btn-secondary btn-large"><span id="calendar_btn_text">📅 Generate Seasonal Calendar</span></button>
+                </div>
+                <div id="predict-result" style="display:none; margin-bottom:24px;" class="fade-in"><h3 class="section-heading"><span class="material-symbols-outlined">psychology</span> Season Prediction</h3><div class="result-box" id="predict-content"></div></div>
+                <div id="calendar-result" style="display:none;" class="fade-in"><h3 class="section-heading"><span class="material-symbols-outlined">calendar_month</span> 12-Month Farming Calendar</h3><div id="calendar-grid" class="calendar-grid"></div></div>
+            </section>
+
+            <!-- ═══ CROP DOCTOR ═══ -->
+            <section id="page-doctor" class="page-section">
+                <div class="page-header anim-slide-up"><h1 data-i18n="doctor_title">📸 Crop Doctor</h1><p data-i18n="doctor_desc">Upload a photo of your plant and AI will diagnose diseases, pests, or deficiencies.</p></div>
+                <div class="card anim-scale">
+                    <div class="upload-zone" id="upload-zone">
+                        <span class="material-symbols-outlined" style="font-size:48px; color:var(--primary); opacity:0.5;">add_a_photo</span>
+                        <p style="font-size:16px; font-weight:600; color:var(--primary); margin-top:12px;" data-i18n="upload_prompt">Click or drag a photo here</p>
+                        <p style="font-size:12px; color:var(--outline);">JPG, PNG — Max 5MB</p>
+                        <input type="file" id="disease-file" accept="image/*" style="display:none;"/>
+                    </div>
+                    <div id="image-preview" style="display:none; margin-top:16px; text-align:center;">
+                        <img id="preview-img" style="max-height:300px; border-radius:12px; border:2px solid var(--outline-variant);"/>
+                        <br><button id="scan_btn" class="btn-primary btn-glow" style="margin-top:16px;"><span id="scan_btn_text">🔬 Analyze Plant</span></button>
+                    </div>
+                </div>
+                <div id="disease-result" style="display:none; margin-top:24px;" class="fade-in"><h3 class="section-heading"><span class="material-symbols-outlined">healing</span> Diagnosis Report</h3><div class="result-box" id="disease-content"></div></div>
+            </section>
+
+            <!-- ═══ MARKET ANALYSIS ═══ -->
+            <section id="page-market" class="page-section">
+                <div class="page-header anim-slide-up"><h1 data-i18n="market_title">Market Analysis</h1><p data-i18n="market_desc">AI-powered market prices, trends, and best selling times.</p></div>
+                <div class="card anim-scale">
+                    <h3 class="section-heading"><span class="material-symbols-outlined">search</span> Search Crops</h3>
+                    <div class="grid-2" style="margin-bottom:16px;">
+                        <div><label class="field-label">Crops (comma-separated)</label><input id="market_crops" class="input-field" placeholder="e.g. Rice, Wheat, Sugarcane"/></div>
+                        <div><label class="field-label">Region</label><input id="market_region" class="input-field" value="India"/></div>
+                    </div>
+                    <button id="market_btn" class="btn-primary btn-glow"><span id="market_btn_text">Get Market Analysis</span> <span class="material-symbols-outlined" style="font-size:18px;">analytics</span></button>
+                </div>
+                <div id="market-result" style="display:none; margin-top:24px;" class="fade-in"><h3 class="section-heading"><span class="material-symbols-outlined">bar_chart</span> Results</h3><div class="result-box" id="market-content"></div></div>
+            </section>
+
+            <!-- ═══ ROI CALCULATOR ═══ -->
+            <section id="page-roi" class="page-section">
+                <div class="page-header anim-slide-up"><h1 data-i18n="roi_title">ROI Calculator</h1><p data-i18n="roi_desc">Estimate return on investment with AI cost breakdown.</p></div>
+                <div class="card anim-scale">
+                    <h3 class="section-heading"><span class="material-symbols-outlined">calculate</span> Investment Details</h3>
+                    <div class="grid-2" style="margin-bottom:16px;">
+                        <div><label class="field-label">Crop Name</label><input id="roi_crop" class="input-field" placeholder="e.g. Rice"/></div>
+                        <div><label class="field-label">Farm Area (acres)</label><input id="roi_area" class="input-field" type="number" step="0.1" placeholder="e.g. 5"/></div>
+                    </div>
+                    <div class="grid-2" style="margin-bottom:16px;">
+                        <div><label class="field-label">Total Investment (₹)</label><input id="roi_investment" class="input-field" type="number" placeholder="e.g. 50000"/></div>
+                        <div><label class="field-label">Region</label><input id="roi_region" class="input-field" value="India"/></div>
+                    </div>
+                    <button id="roi_btn" class="btn-primary btn-glow"><span id="roi_btn_text">Calculate ROI</span> <span class="material-symbols-outlined" style="font-size:18px;">payments</span></button>
+                </div>
+                <div id="roi-result" style="display:none; margin-top:24px;" class="fade-in"><h3 class="section-heading"><span class="material-symbols-outlined">receipt_long</span> ROI Breakdown</h3><div class="result-box" id="roi-content"></div></div>
+            </section>
+
+        </div>
+    </main>
+</div>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
