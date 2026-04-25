@@ -6,11 +6,106 @@ let currentLanguage = "English", userLat = 19.076, userLon = 72.8777, dashboardM
 
 // ─── i18n ─────────────────────────────────────────────────────────
 const i18n = {
-    English: { nav_dashboard:"Dashboard", nav_smart:"Smart Estimator", nav_season:"Season Planner", nav_doctor:"Crop Doctor", nav_market:"Market Analysis", nav_roi:"ROI Calculator", dash_title:"Dashboard", dash_desc:"Real-time weather, 5-day forecast, and AI-powered daily advisory.", weather_title:"Current Weather", forecast_title:"5-Day Forecast", location_title:"Farm Location", advisory_title:"Today's Advisory", smart_title:"🧑‍🌾 Smart Soil Estimator", smart_desc:"No lab test? Just answer simple questions and let AI estimate your soil & recommend crops for the next 90 days!", season_title:"🗓️ Season Planner", season_desc:"AI analyzes 90-day climate data (16-day forecast + historical patterns) to recommend what to plant.", doctor_title:"📸 Crop Doctor", doctor_desc:"Upload a photo and AI diagnoses diseases instantly.", market_title:"Market Analysis", market_desc:"AI-powered market prices, trends, and selling times.", roi_title:"ROI Calculator", roi_desc:"Estimate return on investment with AI cost breakdown.", upload_prompt:"Click or drag a photo here" },
-    Hindi: { nav_dashboard:"डैशबोर्ड", nav_smart:"स्मार्ट अनुमान", nav_season:"मौसम योजना", nav_doctor:"फसल डॉक्टर", nav_market:"बाज़ार विश्लेषण", nav_roi:"ROI कैलकुलेटर", dash_title:"डैशबोर्ड", dash_desc:"मौसम, पूर्वानुमान और AI सलाह।", weather_title:"मौजूदा मौसम", forecast_title:"5-दिन का पूर्वानुमान", location_title:"खेत का स्थान", advisory_title:"आज की सलाह", smart_title:"🧑‍🌾 स्मार्ट मिट्टी अनुमान", smart_desc:"मिट्टी का pH नहीं पता? सरल सवालों का जवाब दें, 90 दिन की फसल योजना पाएं!", season_title:"🗓️ मौसम योजना", season_desc:"AI 90 दिनों के जलवायु आँकड़ों का विश्लेषण करता है।", doctor_title:"📸 फसल डॉक्टर", doctor_desc:"फोटो अपलोड करें, AI बीमारी बताएगा।", market_title:"बाज़ार विश्लेषण", market_desc:"AI बाज़ार भाव और रुझान।", roi_title:"ROI कैलकुलेटर", roi_desc:"AI लागत विश्लेषण।", upload_prompt:"फोटो यहाँ डालें" },
-    Marathi: { nav_dashboard:"डॅशबोर्ड", nav_smart:"स्मार्ट अंदाज", nav_season:"हंगाम नियोजन", nav_doctor:"पीक डॉक्टर", nav_market:"बाजार विश्लेषण", nav_roi:"ROI कॅल्क्युलेटर", dash_title:"डॅशबोर्ड", dash_desc:"हवामान, अंदाज आणि AI सल्ला.", weather_title:"सध्याचे हवामान", forecast_title:"5-दिवसांचा अंदाज", location_title:"शेताचे ठिकाण", advisory_title:"आजचा सल्ला", smart_title:"🧑‍🌾 स्मार्ट माती अंदाज", smart_desc:"pH माहित नाही? सोप्या प्रश्नांची उत्तरे द्या, 90 दिवसांची पीक योजना मिळवा!", season_title:"🗓️ हंगाम नियोजन", season_desc:"AI 90 दिवसांच्या हवामान डेटाचे विश्लेषण करतो.", doctor_title:"📸 पीक डॉक्टर", doctor_desc:"फोटो अपलोड करा, AI रोग ओळखेल.", market_title:"बाजार विश्लेषण", market_desc:"AI बाजारभाव आणि ट्रेंड.", roi_title:"ROI कॅल्क्युलेटर", roi_desc:"AI खर्च विश्लेषण.", upload_prompt:"फोटो इथे टाका" }
+    English: {
+        // Nav
+        nav_dashboard:"Dashboard", nav_smart:"Smart Estimator", nav_season:"Season Planner", nav_doctor:"Crop Doctor", nav_market:"Market Analysis", nav_roi:"ROI Calculator",
+        // Dashboard
+        dash_title:"Dashboard", dash_desc:"Real-time weather, 5-day forecast, and AI-powered daily advisory.", weather_title:"Current Weather", forecast_title:"5-Day Forecast", location_title:"Farm Location", advisory_title:"Today's Advisory",
+        // Smart Estimator
+        smart_title:"🧑‍🌾 Smart Soil Estimator", smart_desc:"No lab test? Just answer simple questions and let AI estimate your soil & recommend crops for the next 90 days!",
+        q_soil:"What does your soil look like?", soil_dark:"Dark Black", soil_red:"Reddish Brown", soil_sandy:"Light Sandy", soil_clay:"Grey Clay",
+        q_drain:"How does water drain?", drain_pools:"Pools Quickly", drain_slow:"Drains Slowly", drain_fast:"Drains Fast",
+        q_prev:"What did you grow last season?", crop_rice:"Rice", crop_wheat:"Wheat", crop_sugarcane:"Sugarcane", crop_veg:"Vegetables", crop_nothing:"Nothing",
+        q_fert:"What fertilizer do you use?", fert_dap:"DAP", fert_urea:"Urea", fert_compost:"Compost", fert_none:"None",
+        lbl_water_source:"Water Source", water_well:"Well Water", water_rain:"Rainfed", water_river:"River/Stream",
+        lbl_farm_type:"Farming Type", farm_mixed:"Mixed", farm_organic:"Organic", farm_chemical:"Chemical",
+        btn_smart:"🌱 Get Smart Recommendations", result_ai:"AI Analysis",
+        // Season Planner
+        season_title:"🗓️ Season Planner", season_desc:"AI analyzes 90-day climate data (16-day forecast + historical patterns) to recommend what to plant.",
+        btn_predict:"🔮 90-Day Season Prediction", btn_calendar:"📅 Generate Seasonal Calendar", result_season:"Season Prediction", result_calendar:"12-Month Farming Calendar",
+        // Crop Doctor
+        doctor_title:"📸 Crop Doctor", doctor_desc:"Upload a photo and AI diagnoses diseases instantly.", upload_prompt:"Click or drag a photo here",
+        btn_scan:"🔬 Analyze Plant", result_diagnosis:"Diagnosis Report",
+        // Market
+        market_title:"Market Analysis", market_desc:"AI-powered market prices, trends, and selling times.",
+        lbl_search_crops:"Search Crops", lbl_crops_input:"Crops (comma-separated)", placeholder_crops:"e.g. Rice, Wheat, Sugarcane", lbl_region:"Region",
+        btn_market:"Get Market Analysis", result_market:"Results",
+        // ROI
+        roi_title:"ROI Calculator", roi_desc:"Estimate return on investment with AI cost breakdown.",
+        lbl_investment:"Investment Details", lbl_crop_name:"Crop Name", placeholder_crop:"e.g. Rice", lbl_area:"Farm Area (acres)", lbl_total_inv:"Total Investment (₹)",
+        btn_roi:"Calculate ROI"
+    },
+    Hindi: {
+        // Nav
+        nav_dashboard:"डैशबोर्ड", nav_smart:"स्मार्ट अनुमान", nav_season:"मौसम योजना", nav_doctor:"फसल डॉक्टर", nav_market:"बाज़ार विश्लेषण", nav_roi:"ROI कैलकुलेटर",
+        // Dashboard
+        dash_title:"डैशबोर्ड", dash_desc:"मौसम, पूर्वानुमान और AI सलाह।", weather_title:"मौजूदा मौसम", forecast_title:"5-दिन का पूर्वानुमान", location_title:"खेत का स्थान", advisory_title:"आज की सलाह",
+        // Smart Estimator
+        smart_title:"🧑‍🌾 स्मार्ट मिट्टी अनुमान", smart_desc:"मिट्टी का pH नहीं पता? सरल सवालों का जवाब दें, 90 दिन की फसल योजना पाएं!",
+        q_soil:"आपकी मिट्टी कैसी दिखती है?", soil_dark:"गहरी काली", soil_red:"लाल-भूरी", soil_sandy:"हल्की रेतीली", soil_clay:"भूरी चिकनी",
+        q_drain:"पानी कैसे निकलता है?", drain_pools:"जल्दी जमता है", drain_slow:"धीरे निकलता है", drain_fast:"जल्दी सूखता है",
+        q_prev:"पिछले मौसम में क्या उगाया?", crop_rice:"चावल", crop_wheat:"गेहूँ", crop_sugarcane:"गन्ना", crop_veg:"सब्जियाँ", crop_nothing:"कुछ नहीं",
+        q_fert:"आप कौन सी खाद उपयोग करते हैं?", fert_dap:"DAP", fert_urea:"यूरिया", fert_compost:"जैविक खाद", fert_none:"कोई नहीं",
+        lbl_water_source:"पानी का स्रोत", water_well:"कुएं का पानी", water_rain:"वर्षा आधारित", water_river:"नदी/नाला",
+        lbl_farm_type:"खेती का प्रकार", farm_mixed:"मिश्रित", farm_organic:"जैविक", farm_chemical:"रासायनिक",
+        btn_smart:"🌱 स्मार्ट सुझाव पाएं", result_ai:"AI विश्लेषण",
+        // Season Planner
+        season_title:"🗓️ मौसम योजना", season_desc:"AI 90 दिनों के जलवायु आँकड़ों का विश्लेषण करता है।",
+        btn_predict:"🔮 90-दिन मौसम भविष्यवाणी", btn_calendar:"📅 मौसमी कैलेंडर बनाएं", result_season:"मौसम भविष्यवाणी", result_calendar:"12-माह कृषि कैलेंडर",
+        // Crop Doctor
+        doctor_title:"📸 फसल डॉक्टर", doctor_desc:"फोटो अपलोड करें, AI बीमारी बताएगा।", upload_prompt:"फोटो यहाँ डालें",
+        btn_scan:"🔬 पौधे की जाँच करें", result_diagnosis:"रोग निदान रिपोर्ट",
+        // Market
+        market_title:"बाज़ार विश्लेषण", market_desc:"AI बाज़ार भाव और रुझान।",
+        lbl_search_crops:"फसलें खोजें", lbl_crops_input:"फसलें (कॉमा से अलग करें)", placeholder_crops:"जैसे: चावल, गेहूँ, गन्ना", lbl_region:"क्षेत्र",
+        btn_market:"बाज़ार विश्लेषण करें", result_market:"परिणाम",
+        // ROI
+        roi_title:"ROI कैलकुलेटर", roi_desc:"AI लागत विश्लेषण।",
+        lbl_investment:"निवेश विवरण", lbl_crop_name:"फसल का नाम", placeholder_crop:"जैसे: चावल", lbl_area:"खेत क्षेत्र (एकड़)", lbl_total_inv:"कुल निवेश (₹)",
+        btn_roi:"ROI गणना करें"
+    },
+    Marathi: {
+        // Nav
+        nav_dashboard:"डॅशबोर्ड", nav_smart:"स्मार्ट अंदाज", nav_season:"हंगाम नियोजन", nav_doctor:"पीक डॉक्टर", nav_market:"बाजार विश्लेषण", nav_roi:"ROI कॅल्क्युलेटर",
+        // Dashboard
+        dash_title:"डॅशबोर्ड", dash_desc:"हवामान, अंदाज आणि AI सल्ला.", weather_title:"सध्याचे हवामान", forecast_title:"5-दिवसांचा अंदाज", location_title:"शेताचे ठिकाण", advisory_title:"आजचा सल्ला",
+        // Smart Estimator
+        smart_title:"🧑‍🌾 स्मार्ट माती अंदाज", smart_desc:"pH माहित नाही? सोप्या प्रश्नांची उत्तरे द्या, 90 दिवसांची पीक योजना मिळवा!",
+        q_soil:"तुमची माती कशी दिसते?", soil_dark:"गडद काळी", soil_red:"लाल-तपकिरी", soil_sandy:"हलकी वाळूयुक्त", soil_clay:"राखाडी चिकण",
+        q_drain:"पाणी कसे निचरते?", drain_pools:"लवकर साचते", drain_slow:"हळू निचरते", drain_fast:"लवकर सुकते",
+        q_prev:"मागील हंगामात काय पिकवले?", crop_rice:"भात", crop_wheat:"गहू", crop_sugarcane:"ऊस", crop_veg:"भाजीपाला", crop_nothing:"काहीच नाही",
+        q_fert:"तुम्ही कोणते खत वापरता?", fert_dap:"DAP", fert_urea:"युरिया", fert_compost:"सेंद्रिय खत", fert_none:"काहीच नाही",
+        lbl_water_source:"पाण्याचा स्रोत", water_well:"विहिरीचे पाणी", water_rain:"पावसावर अवलंबून", water_river:"नदी/ओढा",
+        lbl_farm_type:"शेतीचा प्रकार", farm_mixed:"मिश्र", farm_organic:"सेंद्रिय", farm_chemical:"रासायनिक",
+        btn_smart:"🌱 स्मार्ट शिफारसी मिळवा", result_ai:"AI विश्लेषण",
+        // Season Planner
+        season_title:"🗓️ हंगाम नियोजन", season_desc:"AI 90 दिवसांच्या हवामान डेटाचे विश्लेषण करतो.",
+        btn_predict:"🔮 90-दिवस हंगाम अंदाज", btn_calendar:"📅 हंगामी दिनदर्शिका तयार करा", result_season:"हंगाम अंदाज", result_calendar:"12-महिने शेती दिनदर्शिका",
+        // Crop Doctor
+        doctor_title:"📸 पीक डॉक्टर", doctor_desc:"फोटो अपलोड करा, AI रोग ओळखेल.", upload_prompt:"फोटो इथे टाका",
+        btn_scan:"🔬 झाडाची तपासणी करा", result_diagnosis:"रोग निदान अहवाल",
+        // Market
+        market_title:"बाजार विश्लेषण", market_desc:"AI बाजारभाव आणि ट्रेंड.",
+        lbl_search_crops:"पिके शोधा", lbl_crops_input:"पिके (स्वल्पविरामाने वेगळे करा)", placeholder_crops:"उदा: भात, गहू, ऊस", lbl_region:"प्रदेश",
+        btn_market:"बाजार विश्लेषण करा", result_market:"निकाल",
+        // ROI
+        roi_title:"ROI कॅल्क्युलेटर", roi_desc:"AI खर्च विश्लेषण.",
+        lbl_investment:"गुंतवणूक तपशील", lbl_crop_name:"पिकाचे नाव", placeholder_crop:"उदा: भात", lbl_area:"शेत क्षेत्र (एकर)", lbl_total_inv:"एकूण गुंतवणूक (₹)",
+        btn_roi:"ROI मोजा"
+    }
 };
-function updateLanguageUI() { const t = i18n[currentLanguage]||i18n.English; document.querySelectorAll('[data-i18n]').forEach(el => { const k = el.getAttribute('data-i18n'); if (t[k]) el.textContent = t[k]; }); }
+function updateLanguageUI() {
+    const t = i18n[currentLanguage] || i18n.English;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (t[k]) el.textContent = t[k];
+    });
+    // Handle placeholder translations
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const k = el.getAttribute('data-i18n-placeholder');
+        if (t[k]) el.placeholder = t[k];
+    });
+}
 document.getElementById('lang-select').addEventListener('change', e => { currentLanguage = e.target.value; updateLanguageUI(); });
 
 // ─── Navigation ───────────────────────────────────────────────────
