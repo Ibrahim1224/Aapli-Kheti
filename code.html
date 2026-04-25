@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Data Input | Aapli Kheti</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "primary-container": "#2d5a27",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#2c160e",
+                        "on-surface-variant": "#42493e",
+                        "on-tertiary-fixed-variant": "#004a75",
+                        "tertiary-container": "#005484",
+                        "surface-bright": "#f8faf8",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d8dad9",
+                        "surface-tint": "#3b6934",
+                        "background": "#f8faf8",
+                        "inverse-on-surface": "#eff1ef",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#8dc8ff",
+                        "on-secondary-container": "#795950",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#191c1b",
+                        "on-primary-fixed-variant": "#23501e",
+                        "inverse-surface": "#2e3130",
+                        "surface-container": "#eceeec",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#e6e9e7",
+                        "secondary-fixed": "#ffdbd0",
+                        "surface": "#f8faf8",
+                        "tertiary-fixed": "#cee5ff",
+                        "tertiary": "#003c60",
+                        "secondary-container": "#fed3c7",
+                        "inverse-primary": "#a1d494",
+                        "outline": "#72796e",
+                        "on-surface": "#191c1b",
+                        "primary-fixed": "#bcf0ae",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#002201",
+                        "on-secondary-fixed-variant": "#5d4037",
+                        "surface-variant": "#e1e3e1",
+                        "surface-container-low": "#f2f4f2",
+                        "primary-fixed-dim": "#a1d494",
+                        "on-tertiary-fixed": "#001d32",
+                        "primary": "#154212",
+                        "surface-container-highest": "#e1e3e1",
+                        "secondary": "#77574d",
+                        "on-primary-container": "#9dd090",
+                        "secondary-fixed-dim": "#e7bdb1",
+                        "outline-variant": "#c2c9bb",
+                        "tertiary-fixed-dim": "#96ccff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "48px",
+                        "xl": "80px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "base": "8px",
+                        "margin": "32px",
+                        "xs": "4px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "data-display": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "h2": ["Manrope"],
+                        "h1": ["Manrope"],
+                        "h3": ["Manrope"],
+                        "label-sm": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "data-display": ["28px", { "lineHeight": "1.0", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h2": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "h1": ["40px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "h3": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "label-sm": ["13px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface">
+    <div class="flex h-screen overflow-hidden">
+        <!-- SideNavBar -->
+        <aside
+            class="hidden lg:flex flex-col h-screen sticky top-0 p-4 bg-neutral-50 dark:bg-neutral-950 border-r border-neutral-200 dark:border-neutral-800 w-64">
+            <div class="mb-xl px-4">
+                <h1 class="text-lg font-black text-emerald-900 dark:text-emerald-50">AgriTerra Data</h1>
+                <p class="text-xs text-neutral-500 font-medium">Precision Farming</p>
+            </div>
+            <nav class="flex-1 space-y-2">
+                <!-- Dashboard (Inactive) -->
+                <a class="flex items-center gap-3 text-neutral-600 dark:text-neutral-400 px-4 py-2 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-all"
+                    href="#">
+                    <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    <span class="font-manrope text-sm font-medium">Dashboard</span>
+                </a>
+                <!-- Data Input (Active) -->
+                <a class="flex items-center gap-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-900 dark:text-emerald-100 rounded-lg px-4 py-2 font-bold transition-all"
+                    href="#">
+                    <span class="material-symbols-outlined" data-icon="edit_note"
+                        style="font-variation-settings: 'FILL' 1;">edit_note</span>
+                    <span class="font-manrope text-sm font-medium">Data Input</span>
+                </a>
+                <a class="flex items-center gap-3 text-neutral-600 dark:text-neutral-400 px-4 py-2 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-all"
+                    href="#">
+                    <span class="material-symbols-outlined" data-icon="Psychology">psychology</span>
+                    <span class="font-manrope text-sm font-medium">Recommendations</span>
+                </a>
+                <a class="flex items-center gap-3 text-neutral-600 dark:text-neutral-400 px-4 py-2 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-all"
+                    href="#">
+                    <span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+                    <span class="font-manrope text-sm font-medium">Market Analysis</span>
+                </a>
+                <a class="flex items-center gap-3 text-neutral-600 dark:text-neutral-400 px-4 py-2 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-all"
+                    href="#">
+                    <span class="material-symbols-outlined" data-icon="insights">insights</span>
+                    <span class="font-manrope text-sm font-medium">ROI View</span>
+                </a>
+            </nav>
+            <div class="mt-auto px-4 pb-4">
+                <button
+                    class="w-full bg-primary text-on-primary py-3 rounded-xl font-bold text-sm shadow-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                    New Report
+                </button>
+            </div>
+        </aside>
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col h-screen overflow-y-auto bg-surface-bright relative">
+            <!-- TopAppBar -->
+            <header
+                class="flex justify-between items-center w-full px-6 py-3 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 sticky top-0 z-40">
+                <div class="flex items-center gap-4">
+                    <span class="material-symbols-outlined lg:hidden" data-icon="menu">menu</span>
+                    <h2 class="text-xl font-bold text-emerald-900 dark:text-emerald-50">AgriTerra</h2>
+                </div>
+                <div class="flex items-center gap-6">
+                    <div
+                        class="hidden md:flex items-center bg-surface-container rounded-full px-4 py-1.5 border border-outline-variant">
+                        <span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2"
+                            data-icon="search">search</span>
+                        <input class="bg-transparent border-none focus:ring-0 text-sm w-48 text-on-surface-variant"
+                            placeholder="Search field logs..." type="text" />
+                    </div>
+                    <div class="flex items-center gap-4 text-neutral-500">
+                        <span class="material-symbols-outlined cursor-pointer hover:text-emerald-700"
+                            data-icon="notifications">notifications</span>
+                        <span class="material-symbols-outlined cursor-pointer hover:text-emerald-700"
+                            data-icon="settings">settings</span>
+                        <div class="w-8 h-8 rounded-full bg-primary-container overflow-hidden ring-2 ring-emerald-100">
+                            <img alt="User profile avatar" class="w-full h-full object-cover"
+                                data-alt="close-up portrait of a middle-aged farmer with a friendly smile, outdoor lighting, agricultural background"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLtEIxYVLuHRsYCvRwq3TPoLeVXCpYDPMtwTrg8Gh-4OfoiQidDt6ycUS_pSImLRigow3aVKlMKdOSNwbbmcwv_tdYyktC9yUz1oIMwe9DK0wobOPQwv05v5Xw79etXiew7V_w3fCEcaPZXSzgy2x-5YAKYUytD-8IAi2oHydupWpqd1QTCUR1VUNyh5vj8ARuQPMi71b-hsYH2ixJhVTHpf_qN2AlzntFhfrTRDUgurWkM1i56EEmbN94CK6gxjj-Ngn8EqFoOjha" />
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Form Content -->
+            <section class="p-8 max-w-5xl mx-auto w-full">
+                <div class="mb-xl">
+                    <h1 class="font-h1 text-h1 text-primary mb-2">Soil &amp; Terrain Data Input</h1>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Enter your latest field
+                        measurements to refine your crop yield predictions and fertilizer recommendations.</p>
+                </div>
+                <!-- Multi-Step Progress Indicator -->
+                <div class="mb-lg">
+                    <div class="flex items-center justify-between mb-4 px-2">
+                        <div class="flex flex-col items-center">
+                            <div
+                                class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold shadow-md">
+                                1</div>
+                            <span class="mt-2 font-label-sm text-label-sm text-primary">Soil Health</span>
+                        </div>
+                        <div class="flex-1 h-1 bg-primary mx-4 rounded-full"></div>
+                        <div class="flex flex-col items-center">
+                            <div
+                                class="w-10 h-10 rounded-full border-2 border-primary text-primary bg-white flex items-center justify-center font-bold">
+                                2</div>
+                            <span class="mt-2 font-label-sm text-label-sm text-on-surface-variant">Resources</span>
+                        </div>
+                        <div class="flex-1 h-1 bg-surface-container-highest mx-4 rounded-full"></div>
+                        <div class="flex flex-col items-center">
+                            <div
+                                class="w-10 h-10 rounded-full border-2 border-surface-container-highest text-on-surface-variant bg-white flex items-center justify-center font-bold">
+                                3</div>
+                            <span class="mt-2 font-label-sm text-label-sm text-on-surface-variant">Location</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Form Card -->
+                <div class="bg-white border border-outline-variant rounded-xl p-md shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-xl">
+                        <!-- Left Column: Inputs -->
+                        <div class="space-y-md">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="material-symbols-outlined text-primary" data-icon="science">science</span>
+                                <h3 class="font-h3 text-h3 text-primary">Chemical Composition</h3>
+                            </div>
+                            <div class="space-y-sm">
+                                <label class="block font-label-sm text-label-sm text-on-secondary-fixed-variant">Soil pH
+                                    Level</label>
+                                <div class="relative group">
+                                    <input id="ph_input"
+                                        class="w-full border border-outline-variant rounded-lg p-3 focus:border-tertiary focus:ring-1 focus:ring-tertiary transition-all outline-none"
+                                        placeholder="e.g. 6.5" step="0.1" type="number" />
+                                    <div class="absolute right-3 top-3.5 group-hover:block cursor-help">
+                                        <span class="material-symbols-outlined text-outline text-lg"
+                                            data-icon="help">help</span>
+                                    </div>
+                                </div>
+                                <p class="text-[11px] text-outline">Ideal range for cereals is 6.0 - 7.5</p>
+                            </div>
+                            <div class="grid grid-cols-3 gap-sm">
+                                <div class="space-y-xs">
+                                    <label
+                                        class="block font-label-sm text-label-sm text-on-secondary-fixed-variant">Nitrogen
+                                        (N)</label>
+                                    <input id="n_input"
+                                        class="w-full border border-outline-variant rounded-lg p-3 focus:border-tertiary transition-all outline-none"
+                                        placeholder="mg/kg" type="number" />
+                                </div>
+                                <div class="space-y-xs">
+                                    <label
+                                        class="block font-label-sm text-label-sm text-on-secondary-fixed-variant">Phosphorus
+                                        (P)</label>
+                                    <input id="p_input"
+                                        class="w-full border border-outline-variant rounded-lg p-3 focus:border-tertiary transition-all outline-none"
+                                        placeholder="mg/kg" type="number" />
+                                </div>
+                                <div class="space-y-xs">
+                                    <label
+                                        class="block font-label-sm text-label-sm text-on-secondary-fixed-variant">Potassium
+                                        (K)</label>
+                                    <input id="k_input"
+                                        class="w-full border border-outline-variant rounded-lg p-3 focus:border-tertiary transition-all outline-none"
+                                        placeholder="mg/kg" type="number" />
+                                </div>
+                            </div>
+                            <div class="space-y-sm pt-4">
+                                <div class="flex items-center gap-2 mb-4">
+                                    <span class="material-symbols-outlined text-primary"
+                                        data-icon="water_drop">water_drop</span>
+                                    <h3 class="font-h3 text-h3 text-primary">Water Availability</h3>
+                                </div>
+                                <div class="flex flex-wrap gap-sm">
+                                    <button id="water_well" type="button"
+                                        class="water-btn px-4 py-2 rounded-full border-2 border-primary bg-primary-container text-white text-sm font-bold flex items-center gap-2"
+                                        data-value="Well Water">
+                                        <span class="material-symbols-outlined text-sm" data-icon="check">check</span>
+                                        Well Water
+                                    </button>
+                                    <button id="water_rain" type="button"
+                                        class="water-btn px-4 py-2 rounded-full border-2 border-outline-variant text-on-surface-variant text-sm font-medium hover:border-primary transition-colors"
+                                        data-value="Rainfed">Rainfed</button>
+                                    <button id="water_river" type="button"
+                                        class="water-btn px-4 py-2 rounded-full border-2 border-outline-variant text-on-surface-variant text-sm font-medium hover:border-primary transition-colors"
+                                        data-value="River/Stream">River/Stream</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Right Column: Context/Visuals -->
+                        <div
+                            class="bg-surface-container-low rounded-xl p-md flex flex-col items-center justify-center text-center space-y-md border border-outline-variant/30">
+                            <div class="w-full h-48 rounded-lg overflow-hidden mb-sm border border-outline-variant">
+                                <img alt="Soil sample" class="w-full h-full object-cover"
+                                    data-alt="close-up of rich dark organic soil being held in a hand, detailed texture, soft afternoon sunlight in a farm setting"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuUwPST8fOp5B460HF829xa3q16kKOh2sGA7aFOLv-Rbzex4oIKAIH58PuOeSCsVXHpRhjPQDmcpMZm2r98CjBU_Ig7gFbgKWupGvM-BMdMA1CBp8KmxEUY1pnwPMcxL0gUjrKof8Ge46MPewjXBrK9TiQv5epjDDiaM59w4Opx6Da_Brl3ldOn9TheUtRjbVa5mavF03Px5M2UYPXhdlde_-i8POs7Cq77RjF-TlFg6yTJSPhisy3m8QnL4Ej3xFR-8VJ361VPsAG" />
+                            </div>
+                            <h4 class="font-h3 text-h3 text-primary">Why NPK matters?</h4>
+                            <p class="font-body-md text-body-md text-on-surface-variant italic">"Nitrogen fuels leaf
+                                growth, Phosphorus builds strong roots, and Potassium ensures overall plant health and
+                                disease resistance."</p>
+                            <div class="flex items-center gap-4 pt-4">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-tertiary font-bold">85%</span>
+                                    <span class="text-[10px] uppercase font-bold text-outline">Accuracy</span>
+                                </div>
+                                <div class="w-[1px] h-8 bg-outline-variant"></div>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-tertiary font-bold">12s</span>
+                                    <span class="text-[10px] uppercase font-bold text-outline">Analysis</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-xl border-t border-outline-variant pt-md flex justify-between items-center">
+                        <button
+                            class="font-label-sm text-label-sm text-secondary hover:underline transition-all flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm" data-icon="arrow_back">arrow_back</span>
+                            Cancel &amp; Exit
+                        </button>
+                        <div class="flex gap-4">
+                            <button
+                                class="px-6 py-2.5 rounded-lg border border-outline text-on-surface font-bold text-sm hover:bg-surface-container transition-colors">Save
+                                Draft</button>
+                            <button id="submit_btn"
+                                class="px-8 py-2.5 rounded-lg bg-primary text-on-primary font-bold text-sm shadow-md hover:scale-[1.02] active:scale-95 duration-150 flex items-center gap-2">
+                                <span id="submit_text">Next Step</span>
+                                <span class="material-symbols-outlined text-sm"
+                                    data-icon="arrow_forward">arrow_forward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Precise Farm Location Preview Section -->
+                <div class="mt-lg grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+                    <div
+                        class="lg:col-span-2 bg-white border border-outline-variant rounded-xl overflow-hidden flex flex-col">
+                        <div
+                            class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-bright">
+                            <h3 class="font-label-sm text-label-sm text-primary flex items-center gap-2">
+                                <span class="material-symbols-outlined text-sm"
+                                    data-icon="location_on">location_on</span>
+                                Precise Farm Boundary
+                            </h3>
+                            <button
+                                class="text-[11px] font-bold text-tertiary uppercase tracking-wider hover:opacity-70">Redraw
+                                Bounds</button>
+                        </div>
+                        <div class="flex-1 min-h-[300px] bg-surface-container relative">
+                            <img alt="Farm Map" class="w-full h-full object-cover"
+                                data-alt="Satellite top-down view of a rectangular green farm field surrounded by a few trees and a dirt path, high resolution"
+                                data-location="Tuscany, Italy"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsma7cKi_Yx2j692_t8Fw7QjlyFoQ3fNrBn0plO7womhuBh-WP92D8kTQObWW09-j_fXOl28SqrXi2sHfqzXwwv2Ps0p0pdPrAFBFCq7muON3y4rCbNV927RxYJWTw6yA_M0pbHCri8WsqBnpZiOTELjp_ZiALeY4ruBrQ1GxLkFuLXGdLfCNCgjoX3MdmA8qGqYUc4-N5vnjF48vlCRwFcRCABIklJUavvhyJgVRqAGM59k_QfSrjrz7D1onQLOzP3byi4xrIwuiG" />
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-32 h-24 border-4 border-primary bg-primary/10 rounded-sm"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-primary-container text-on-primary-container p-md rounded-xl flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-h3 text-h3 mb-2">Location Context</h4>
+                            <p class="text-sm opacity-90 leading-relaxed mb-4">We use your precise coordinates to pull
+                                historical weather patterns and geological surveys automatically.</p>
+                            <div class="space-y-3">
+                                <div class="flex justify-between text-xs py-2 border-b border-white/20">
+                                    <span class="opacity-70">Latitude</span>
+                                    <span class="font-bold">43.7696° N</span>
+                                </div>
+                                <div class="flex justify-between text-xs py-2 border-b border-white/20">
+                                    <span class="opacity-70">Longitude</span>
+                                    <span class="font-bold">11.2558° E</span>
+                                </div>
+                                <div class="flex justify-between text-xs py-2">
+                                    <span class="opacity-70">Elevation</span>
+                                    <span class="font-bold">142m AMSL</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 p-3 bg-white/10 rounded-lg border border-white/10 text-xs">
+                            <div class="flex gap-2">
+                                <span class="material-symbols-outlined text-sm" data-icon="info">info</span>
+                                <span>High precision data reduces fertilizer waste by up to 22%.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommendation Result Section (Hidden by Default) -->
+            <section id="result_section" class="hidden p-8 max-w-5xl mx-auto w-full mb-lg">
+                <div
+                    class="bg-primary-container text-on-primary-container rounded-xl p-6 shadow-md border border-outline-variant">
+                    <h2 class="text-h2 font-h2 mb-4 text-white">AI Recommendation</h2>
+                    <div id="result_content" class="text-white text-body-md font-body-md whitespace-pre-wrap"></div>
+                </div>
+            </section>
+            <!-- Bottom Navigation (Mobile Only) -->
+            <nav
+                class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe pt-2 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md border-t border-neutral-200 dark:border-neutral-800 shadow-[0_-4px_12px_rgba(45,90,39,0.05)] rounded-t-xl">
+                <div class="flex flex-col items-center justify-center text-neutral-500 py-1.5">
+                    <span class="material-symbols-outlined" data-icon="home">home</span>
+                    <span class="font-manrope text-[10px] font-bold uppercase tracking-wider">Home</span>
+                </div>
+                <div
+                    class="flex flex-col items-center justify-center bg-emerald-100 dark:bg-emerald-900/40 text-emerald-900 dark:text-emerald-50 rounded-2xl px-3 py-1.5">
+                    <span class="material-symbols-outlined" data-icon="add_chart"
+                        style="font-variation-settings: 'FILL' 1;">add_chart</span>
+                    <span class="font-manrope text-[10px] font-bold uppercase tracking-wider">Input</span>
+                </div>
+                <div class="flex flex-col items-center justify-center text-neutral-500 py-1.5">
+                    <span class="material-symbols-outlined" data-icon="agriculture">agriculture</span>
+                    <span class="font-manrope text-[10px] font-bold uppercase tracking-wider">Crops</span>
+                </div>
+                <div class="flex flex-col items-center justify-center text-neutral-500 py-1.5">
+                    <span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+                    <span class="font-manrope text-[10px] font-bold uppercase tracking-wider">Market</span>
+                </div>
+                <div class="flex flex-col items-center justify-center text-neutral-500 py-1.5">
+                    <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+                    <span class="font-manrope text-[10px] font-bold uppercase tracking-wider">ROI</span>
+                </div>
+            </nav>
+        </main>
+        </nav>
+        </main>
+    </div>
+
+    <script>
+        // Water buttons logic
+        let selectedWater = "Well Water";
+        const waterBtns = document.querySelectorAll('.water-btn');
+
+        waterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Reset all buttons
+                waterBtns.forEach(b => {
+                    b.className = "water-btn px-4 py-2 rounded-full border-2 border-outline-variant text-on-surface-variant text-sm font-medium hover:border-primary transition-colors";
+                    if (b.querySelector('span')) b.querySelector('span').remove();
+                });
+
+                // Set active button
+                btn.className = "water-btn px-4 py-2 rounded-full border-2 border-primary bg-primary-container text-white text-sm font-bold flex items-center gap-2";
+                btn.innerHTML = '<span class="material-symbols-outlined text-sm" data-icon="check">check</span> ' + btn.getAttribute('data-value');
+                selectedWater = btn.getAttribute('data-value');
+            });
+        });
+
+        // Form submission
+        const submitBtn = document.getElementById('submit_btn');
+        const submitText = document.getElementById('submit_text');
+        const resultSection = document.getElementById('result_section');
+        const resultContent = document.getElementById('result_content');
+
+        submitBtn.addEventListener('click', async () => {
+            const ph = parseFloat(document.getElementById('ph_input').value);
+            const n = parseFloat(document.getElementById('n_input').value);
+            const p = parseFloat(document.getElementById('p_input').value);
+            const k = parseFloat(document.getElementById('k_input').value);
+
+            if (isNaN(ph) || isNaN(n) || isNaN(p) || isNaN(k)) {
+                alert("Please fill in all the chemical composition fields.");
+                return;
+            }
+
+            // Hardcoded location for Tuscany, Italy from the UI, or could use geolocation.
+            const lat = 43.7696;
+            const lon = 11.2558;
+
+            const payload = {
+                ph: ph,
+                nitrogen: n,
+                phosphorus: p,
+                potassium: k,
+                water_availability: selectedWater,
+                lat: lat,
+                lon: lon
+            };
+
+            // UI Feedback
+            submitText.innerText = "Analyzing...";
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/recommend', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errData = await response.json();
+                    throw new Error(errData.detail || "Failed to fetch recommendation");
+                }
+
+                const data = await response.json();
+
+                resultSection.classList.remove('hidden');
+                resultContent.innerText = data.recommendation;
+
+                // Scroll to result
+                resultSection.scrollIntoView({ behavior: 'smooth' });
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred: " + error.message);
+            } finally {
+                submitText.innerText = "Next Step";
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>
