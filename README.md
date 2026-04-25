@@ -20,14 +20,6 @@
 
 ---
 
-## 📸 Screenshot
-
-<p align="center">
-  <img src="screen.png" alt="Aapli Kheti Dashboard" width="800" style="border-radius:12px; border: 1px solid #e0e0e0;"/>
-</p>
-
----
-
 ## 🌟 About
 
 **Aapli Kheti** (आपली खेती — *"Our Farming"* in Marathi) is an AI-driven agricultural intelligence platform designed to empower Indian farmers with data-driven decisions. It combines **90-day climate forecasting**, AI-powered crop recommendations, disease diagnosis via image scanning, crop comparison analytics, market analysis, and financial planning — all through an intuitive, icon-rich interface accessible to users of all literacy levels.
